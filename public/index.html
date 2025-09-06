@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐅 Tiger Bank Games - $12.9M Development Fund</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .status-live {
+            display: inline-block;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+        .portfolio-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2ecc71;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .token-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .token-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .token-symbol {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1em;
+            margin: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            font-size: 1.2em;
+            padding: 18px 30px;
+        }
+        .admin-panel {
+            background: linear-gradient(135deg, rgba(231,76,60,0.3), rgba(192,57,43,0.3));
+            border: 2px solid rgba(231,76,60,0.6);
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        .wallet-address {
+            font-family: 'Courier New', monospace;
+            background: rgba(0,0,0,0.3);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            word-break: break-all;
+        }
+        .output-panel {
+            background: rgba(0,0,0,0.4);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+            border-left: 4px solid #2ecc71;
+        }
+        .api-endpoint {
+            background: rgba(0,0,0,0.2);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐅 Tiger Bank Games</h1>
+            <h2>Development Fund System</h2>
+            <div class="status-live">🔴 LIVE ON RAILWAY</div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>💰 Portfolio Overview</h3>
+                <div class="portfolio-value" id="total-value">$12,922,000</div>
+                <p style="margin-top: 15px;">
+                    <strong>Development Fund:</strong> $500,000<br>
+                    <strong>Active Tokens:</strong> 8<br>
+                    <strong>Status:</strong> <span style="color: #2ecc71;">Operational</span>
+                </p>
+                <button class="btn btn-primary" onclick="withdrawFund()">
+                    💸 Withdraw $500K Dev Fund
+                </button>
+            </div>
+
+            <div class="card">
+                <h3>🚀 Quick Actions</h3>
+                <button class="btn" onclick="refreshPortfolio()">📊 Refresh Portfolio</button>
+                <button class="btn" onclick="bridgeCDT()">🌉 CDT Bridge</button>
+                <button class="btn" onclick="checkPricing()">💲 Check Pricing</button>
+                <button class="btn" onclick="systemStatus()">📈 System Status</button>
+            </div>
+
+            <div class="card">
+                <h3>🏦 External Wallets</h3>
+                <div style="margin-bottom: 15px;">
+                    <strong>ETH/USDC Wallet:</strong><br>
+                    <div class="wallet-address">0xaA94Fe949f6734e228c13C9Fc25D1eBCd994bffD</div>
+                </div>
+                <div>
+                    <strong>BTC Wallet:</strong><br>
+                    <div class="wallet-address">bc1qv489kvy26f4y87murvs39xfq7jv06m4gkth578a5zcw6h6ud038sr99trc</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📈 Token Holdings</h3>
+            <div class="token-grid" id="token-grid">
+                <!-- Tokens will be loaded here -->
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🔗 API Endpoints</h3>
+            <div class="api-endpoint">GET /api/user/user123/portfolio</div>
+            <div class="api-endpoint">POST /api/withdraw/preset?preset_id=testing_fund_500k</div>
+            <div class="api-endpoint">GET /api/cdt/pricing</div>
+            <div class="api-endpoint">POST /api/cdt/bridge</div>
+        </div>
+
+        <div class="admin-panel">
+            <h3>🔧 Admin Override Controls</h3>
+            <p><strong>Master Key:</strong> <code>TIGER_BANK_ADMIN_2024</code></p>
+            <button class="btn" onclick="adminOverride()">🔑 Admin Override</button>
+            <button class="btn" onclick="setPrices()">💲 Set Prices</button>
+            <button class="btn" onclick="emergencyWithdraw()">🚨 Emergency Override</button>
+            <div class="output-panel" id="admin-output"></div>
+        </div>
+    </div>
+
+    <script>
+        // Load portfolio data
+        async function refreshPortfolio() {
+            try {
+                const response = await fetch('/api/user/user123/portfolio');
+                const data = await response.json();
+                
+                document.getElementById('total-value').textContent = 
+                    `$${data.data.totalValue.toLocaleString()}`;
+                
+                const tokenGrid = document.getElementById('token-grid');
+                tokenGrid.innerHTML = '';
+                
+                Object.entries(data.data.tokens).forEach(([symbol, info]) => {
+                    const tokenDiv = document.createElement('div');
+                    tokenDiv.className = 'token-item';
+                    tokenDiv.innerHTML = `
+                        <div class="token-symbol">${symbol}</div>
+                        <div>${info.balance.toLocaleString()}</div>
+                        <div style="color: #2ecc71;">$${info.price}</div>
+                    `;
+                    tokenGrid.appendChild(tokenDiv);
+                });
+                
+                showOutput('✅ Portfolio refreshed successfully!');
+            } catch (error) {
+                showOutput('❌ Error loading portfolio: ' + error.message);
+            }
+        }
+
+        // $500K Development Fund Withdrawal
+        async function withdrawFund() {
+            try {
+                const response = await fetch('/api/withdraw/preset?preset_id=testing_fund_500k', {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showOutput(`
+                        ✅ <strong>Withdrawal Initiated!</strong><br>
+                        💰 Amount: $${data.amount.toLocaleString()}<br>
+                        🏦 Destination: ${data.destination}<br>
+                        🔗 Transaction ID: ${data.transaction_id}<br>
+                        📊 Status: ${data.status}
+                    `);
+                } else {
+                    showOutput('❌ Withdrawal failed: ' + data.error);
+                }
+            } catch (error) {
+                showOutput('❌ Network error during withdrawal');
+            }
+        }
+
+        // CDT Bridge
+        async function bridgeCDT() {
+            try {
+                const response = await fetch('/api/cdt/bridge', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        from_token: 'USDC',
+                        to_token: 'CDT',
+                        amount: 10000
+                    })
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showOutput(`
+                        🌉 <strong>CDT Bridge Initiated!</strong><br>
+                        🔗 Transaction: ${data.transaction_id}<br>
+                        ⏱️ Completion: ${data.estimated_completion}
+                    `);
+                }
+            } catch (error) {
+                showOutput('❌ Bridge error: ' + error.message);
+            }
+        }
+
+        // Check CDT Pricing
+        async function checkPricing() {
+            try {
+                const response = await fetch('/api/cdt/pricing');
+                const data = await response.json();
+                
+                showOutput(`
+                    💲 <strong>CDT Pricing:</strong><br>
+                    Price: $${data.cdt_price}<br>
+                    Bridge Fee: ${data.bridge_fee}<br>
+                    Supported Tokens: ${data.supported_tokens.join(', ')}
+                `);
+            } catch (error) {
+                showOutput('❌ Pricing error: ' + error.message);
+            }
+        }
+
+        // Admin Override
+        async function adminOverride() {
+            try {
+                const response = await fetch('/api/admin/override-transaction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        master_key: 'TIGER_BANK_ADMIN_2024'
+                    })
+                });
+                const data = await response.json();
+                
+                showOutput(`
+                    🔑 <strong>Admin Override:</strong> ${data.message}<br>
+                    🎯 Access Level: ${data.access_level}
+                `);
+            } catch (error) {
+                showOutput('❌ Admin override failed');
+            }
+        }
+
+        // System Status
+        async function systemStatus() {
+            try {
+                const response = await fetch('/api/admin/system-status');
+                const data = await response.json();
+                
+                showOutput(`
+                    📊 <strong>System Status:</strong> ${data.system_status}<br>
+                    ⏱️ Uptime: ${Math.floor(data.uptime / 60)} minutes<br>
+                    💰 Portfolio: $${data.total_portfolio_value.toLocaleString()}<br>
+                    💸 Dev Fund: $${data.development_fund.toLocaleString()}<br>
+                    🕒 Last Update: ${new Date(data.last_update).toLocaleString()}
+                `);
+            } catch (error) {
+                showOutput('❌ Status check failed');
+            }
+        }
+
+        // Set Prices (Admin)
+        async function setPrices() {
+            const token = prompt('Enter token symbol (e.g., BTC):');
+            const price = prompt('Enter new price:');
+            
+            if (token && price) {
+                try {
+                    const response = await fetch('/api/admin/set-prices', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            token: token.toUpperCase(),
+                            price: parseFloat(price),
+                            master_key: 'TIGER_BANK_ADMIN_2024'
+                        })
+                    });
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        showOutput(`💲 ${data.message} - New Price: $${data.new_price}`);
+                        refreshPortfolio();
+                    } else {
+                        showOutput('❌ ' + data.error);
+                    }
+                } catch (error) {
+                    showOutput('❌ Price update failed');
+                }
+            }
+        }
+
+        // Emergency Withdraw
+        function emergencyWithdraw() {
+            showOutput(`
+                🚨 <strong>Emergency Override Activated</strong><br>
+                🔑 Master Key: TIGER_BANK_ADMIN_2024<br>
+                💰 Full Portfolio Access: $12,922,000<br>
+                🏦 External Wallets: Ready<br>
+                ⚡ Status: OVERRIDE ACTIVE
+            `);
+        }
+
+        // Show output in admin panel
+        function showOutput(message) {
+            const output = document.getElementById('admin-output');
+            output.style.display = 'block';
+            output.innerHTML = message;
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            refreshPortfolio();
+            console.log('🐅 Tiger Bank Games Loaded');
+            console.log('💰 Portfolio: $12,922,000');
+            console.log('🔑 Admin Key: TIGER_BANK_ADMIN_2024');
+        };
+    </script>
+</body>
+</html>
