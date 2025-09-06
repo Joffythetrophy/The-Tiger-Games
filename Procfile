@@ -1,1 +1,1 @@
-tiger-bank-games-deployment/Procfile
+web: uvicorn server:app --host 0.0.0.0 --
